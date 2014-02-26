@@ -55,6 +55,7 @@ public class Settings implements DontObfuscate {
 	
 	
 	public static void main(String args[]) {
+		System.out.println("test");
 		Settings test = new Settings();
 		test.m_account = "max100";
 		test.m_lastModifiedTime = System.currentTimeMillis();

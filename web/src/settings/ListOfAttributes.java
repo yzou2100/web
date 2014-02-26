@@ -11,4 +11,6 @@ public class ListOfAttributes extends ArrayList implements ListOfXmlables  {
 	public Attribute gett(int i) {
 		return (Attribute) super.get(i);
 	}
+	
+	ListOfAttributes() { }
 }
