@@ -2,12 +2,15 @@ package settings;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 
+import jutils.S;
 import jxmlable.DontObfuscate;
 import jxmlable.XmlGenerator;
 import jxmlable.XmlParser;
@@ -57,6 +60,38 @@ public class Settings implements DontObfuscate {
 		}
 
 		return null;
+	}
+	
+	public void saveToFile(String filename) {
+		try {
+			System.out.print("Save to " + filename);
+			FileOutputStream output = new FileOutputStream(filename, false);
+			output.write( XmlGenerator.getXml(this).getBytes());
+			output.close();
+		} catch(Exception e) {
+			System.out.print("Failed save Setting file to " + filename + " " + e.getMessage());
+		}
+	}
+	
+	public void restoreFromFile(String filename) {
+		try {
+			System.out.print("open from " + filename + "\n");
+			File destFile = new File( filename );			
+			if ( destFile.exists() ) {
+				DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+				String xml = S.readFileToString(filename);
+				Document d = documentBuilder.parse(
+						new BufferedInputStream( new ByteArrayInputStream( xml.getBytes() ) ) );
+
+				XmlParser.setFromXml(this, d.getDocumentElement());  
+				System.out.print("restore " + filename +"\n");
+			}
+			// create a new one if it does not exists
+			else {
+				System.out.print("create a new Setting file " + filename +"\n");
+			}
+		}
+		catch(Exception e) {}
 	}
 
 	
