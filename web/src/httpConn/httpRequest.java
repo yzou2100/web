@@ -44,33 +44,33 @@ public class httpRequest {
         
        // the request will return a response
        urlConn.setDoInput(true);
-        
+
        if ("POST".equals(method)) {
-           // set request method to POST
-           urlConn.setDoOutput(true);
+    	   // set request method to POST
+    	   urlConn.setDoOutput(true);
        } else {
-           // set request method to GET
-           urlConn.setDoOutput(false);
+    	   // set request method to GET
+    	   urlConn.setDoOutput(false);
        }
-        
+
        if ("POST".equals(method) && params != null && params.size() > 0) {
-           OutputStreamWriter writer = new OutputStreamWriter(urlConn.getOutputStream());
-           writer.write(requestParams.toString());
-           writer.flush();   
+    	   OutputStreamWriter writer = new OutputStreamWriter(urlConn.getOutputStream());
+    	   writer.write(requestParams.toString());
+    	   writer.flush();   
        }
-        
+
        // reads response, store line by line in an array of Strings
        BufferedReader reader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
- 
+
        StringBuffer response = new StringBuffer();
-        String line = "";
-        while ((line = reader.readLine()) != null) {
-            response.append(line);
-        }
-        
-        reader.close();
-        
-        
-        return response.toString();
+       String line = "";
+       while ((line = reader.readLine()) != null) {
+    	   response.append(line);
+       }
+
+       reader.close();
+
+
+       return response.toString();
     }
 }
